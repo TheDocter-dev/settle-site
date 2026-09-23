@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assessments — Settle</title>
+<meta name="description" content="Settle assessments: per-version conformance measurement of x402 facilitators, reproducible from on-chain evidence.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">settle<span>.</span></a>
+    <nav class="site" aria-label="Site">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="assessments.html" aria-current="page">assessments</a>
+      <a href="ledger.html">ledger &amp; verify</a>
+      <a href="governance.html">governance</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <h1>Assessments.</h1>
+    <p class="lede">Each assessment covers one facilitator implementation at one pinned version on
+    one network. Full reports live in the hub, hash-anchored in the Ledger; this page summarises
+    and points. The anchored copy is authoritative.</p>
+
+    <section>
+      <h2>Published</h2>
+
+      <div class="record">
+        <p class="meta">001 · FAREMETER v0.22.0 · BASE SEPOLIA · 22 SEP 2026 · METHOD DEMONSTRATION</p>
+        <h3><a href="https://github.com/TheDocter-dev/settle-hub/blob/main/assessments/001-faremeter-v0.22.0.md">Faremeter v0.22.0</a></h3>
+        <p>Self-hosted deployment, assessed black-box: probe suites across
+        <code>/verify</code>, <code>/settle</code>, <code>/supported</code>, <code>/accepts</code>;
+        on-chain EIP-712 domain verification; a controlled duplicate-settlement race
+        (N=10 concurrent requests on one funded authorization, three rounds plus control).
+        The race was negative — no double settlement, no delivery without settlement. One
+        low-severity robustness note on inconsistent failure signalling, with no payment-integrity
+        implication. Two hypotheses formed during testing were falsified by evidence and withdrawn;
+        both withdrawals are documented in the report.</p>
+        <p>Evidence: <a href="https://github.com/TheDocter-dev/settle-hub/blob/main/assessments/001-artifact-hashes.txt">artifact
+        manifest</a> · Anchors: <a href="https://github.com/TheDocter-dev/settle-ledger/tree/main/anchors/001">001</a>
+        and <a href="https://github.com/TheDocter-dev/settle-ledger/tree/main/anchors/001a">001a</a></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>In preparation</h2>
+
+      <div class="record">
+        <p class="meta">002 · X402-RS FACILITATOR · BASE SEPOLIA · PREDICTIONS LOCKED 17 SEP 2026</p>
+        <h3><a href="https://github.com/TheDocter-dev/settle-ledger/blob/main/anchors/002-pre-registration.md">x402-rs facilitator</a></h3>
+        <p>The same probe method ported to an independent Rust codebase — the codebase-portability
+        rung of the method. The subject is pinned by Docker image digest
+        (<code class="digest">ghcr.io/x402-rs/x402-facilitator@sha256:4ebe09d824bf6a5f342add8ae22eb44a2c56894ad22e7d3f5b83ba38023226b9</code>). Predictions were
+        pre-registered, signed, and anchored before any probe ran; the report will score each one
+        confirmed, refuted, or partial. Execution follows the pre-registered plan, whose hash is
+        anchored; the plan is published with the report. Disclosure to the maintainers will follow
+        the published policy before publication.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Method in one paragraph</h2>
+      <p>Funded, single-defect probes with valid EIP-3009 signatures against a self-hosted subject
+      on a public testnet. Every material claim must resolve to a transaction hash or a
+      re-executable contract call; all probe scripts, raw results, and logs are SHA-256 committed
+      and anchored at publication. Real-world value consumed to date: $0.00. The method and the
+      catalog code are <a href="https://github.com/TheDocter-dev/settle-hub">published</a>.</p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p class="mono">settleverify.com · sharma@settleverify.com · security: <a href="https://github.com/TheDocter-dev/settle-hub/blob/main/SECURITY.md">SECURITY.md</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

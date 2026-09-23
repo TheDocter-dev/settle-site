@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settle — independent x402 conformance &amp; measurement lab</title>
+<meta name="description" content="Settle is an independent, protocol-level conformance and measurement lab for the x402 agent-payment protocol. Every claim hash-anchored; every report reproducible.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">settle<span>.</span></a>
+    <nav class="site" aria-label="Site">
+      <a href="index.html" aria-current="page">home</a>
+      <a href="about.html">about</a>
+      <a href="assessments.html">assessments</a>
+      <a href="ledger.html">ledger &amp; verify</a>
+      <a href="governance.html">governance</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <h1>Independent measurement for agent-payment infrastructure.</h1>
+    <p class="lede">Settle is an independent, protocol-level conformance and measurement lab for the
+    <a href="https://github.com/coinbase/x402">x402</a> agent-payment protocol. We run funded,
+    single-defect probes against facilitator implementations we deploy ourselves on public
+    testnets — or, with written authorization, against a subject's own staging — and we anchor
+    every claim to a hash-committed artifact before we publish it.</p>
+
+    <div class="chain" id="chainHero">
+      <canvas id="heroCanvas" aria-hidden="true"></canvas>
+      <svg viewBox="0 0 640 96" role="img" id="chainFallback">
+        <!-- block 1 -->
+        <g class="blk d0">
+          <rect x="8" y="24" width="120" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <text x="20" y="44" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="currentColor">artifact</text>
+          <text x="20" y="60" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="currentColor" opacity="0.6">sha256: 46f7…</text>
+        </g>
+        <!-- link 1 -->
+        <line class="link-line d1" x1="128" y1="48" x2="188" y2="48" stroke="currentColor" stroke-width="1.2"/>
+        <path class="blk d1" d="M186 44 l8 4 -8 4 z" fill="currentColor"/>
+        <!-- block 2 -->
+        <g class="blk d2">
+          <rect x="196" y="24" width="120" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <text x="208" y="44" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="currentColor">ledger entry</text>
+          <text x="208" y="60" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="currentColor" opacity="0.6">anchor 001a</text>
+        </g>
+        <!-- link 2 -->
+        <line class="link-line d3" x1="316" y1="48" x2="376" y2="48" stroke="currentColor" stroke-width="1.2"/>
+        <path class="blk d3" d="M374 44 l8 4 -8 4 z" fill="currentColor"/>
+        <!-- block 3 -->
+        <g class="blk d4">
+          <rect x="384" y="24" width="120" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <text x="396" y="44" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="currentColor">ots proof</text>
+          <text x="396" y="60" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="currentColor" opacity="0.6">.ots receipt</text>
+        </g>
+        <!-- link 3 -->
+        <line class="link-line d5" x1="504" y1="48" x2="564" y2="48" stroke="currentColor" stroke-width="1.2"/>
+        <path class="blk d5" d="M562 44 l8 4 -8 4 z" fill="currentColor"/>
+        <!-- block 4 -->
+        <g class="blk d6">
+          <rect x="572" y="24" width="60" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <text x="580" y="44" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="10" fill="currentColor">btc</text>
+          <text x="580" y="60" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="9" fill="currentColor" opacity="0.6">block</text>
+        </g>
+      </svg>
+      <p class="chain-caption">artifact → ledger anchor → OpenTimestamps proof → Bitcoin block. Verify any of it yourself: <a href="ledger.html">how to verify</a>.</p>
+    </div>
+
+    <section>
+      <h2>What we do</h2>
+      <ul class="plain">
+        <li>Conformance assessments of individual x402 facilitator implementations, per pinned version, on public testnets — reproducible from on-chain evidence.</li>
+        <li>Continuous passive observation of x402 settlement activity — on Base today, with further chains under a published scoring method.</li>
+        <li>Pre-registered predictions (from assessment 002), locked and hash-anchored <em>before</em> we probe a subject — confirmations and refutations are both reported.</li>
+        <li>Coordinated disclosure to maintainers under a published policy, with dated public windows.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Current record</h2>
+
+      <div class="record">
+        <p class="meta">ASSESSMENT 001 · PUBLISHED 22 SEP 2026</p>
+        <h3><a href="https://github.com/TheDocter-dev/settle-hub/blob/main/assessments/001-faremeter-v0.22.0.md">Faremeter v0.22.0 — self-hosted, Base Sepolia</a></h3>
+        <p>First method demonstration. A controlled duplicate-settlement race came back negative;
+        EIP-3009 nonce enforcement held in every round. One low-severity robustness note on failure
+        signalling. Every material claim resolves to a transaction hash or a re-executable contract call.</p>
+      </div>
+
+      <div class="record">
+        <p class="meta">ASSESSMENT 002 · PREDICTIONS PRE-REGISTERED</p>
+        <h3><a href="https://github.com/TheDocter-dev/settle-ledger/blob/main/anchors/002-pre-registration.md">x402-rs facilitator — pre-registration anchored</a></h3>
+        <p>Predictions locked and signed on 17 September 2026, before any probe ran against the subject.
+        Execution follows the pre-registered plan, whose hash is anchored; the plan is published with
+        the report. The report will cite each prediction as confirmed, refuted, or partial, with
+        evidence pointers.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Where everything lives</h2>
+      <ul class="plain">
+        <li><a href="https://github.com/TheDocter-dev/settle-hub">settle-hub</a> — assessments, policies, method, code.</li>
+        <li><a href="https://github.com/TheDocter-dev/settle-ledger">settle-ledger</a> — the append-only anchor record, with OpenTimestamps Bitcoin proofs.</li>
+        <li><a href="ledger.html">How to verify</a> — walk a claim from a SHA-256 row to a Bitcoin block, by hand.</li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return; // SVG fallback keeps its CSS-only static state
+
+  var canvas = document.getElementById('heroCanvas');
+  var fallback = document.getElementById('chainFallback');
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+
+  // palette follows the page (incl. dark mode)
+  function ink()    { return getComputedStyle(document.body).getPropertyValue('--c-accent').trim() || '#082D4F'; }
+  function faint()  { return getComputedStyle(document.body).getPropertyValue('--c-text-alt').trim() || 'rgba(8,45,79,0.35)'; }
+
+  var W = 640, H = 200, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function size() {
+    var r = canvas.parentNode.getBoundingClientRect();
+    W = Math.max(320, r.width); H = 200;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    layout();
+  }
+
+  var LABELS = ['artifact', 'ledger entry', 'ots proof', 'btc block'];
+  var SUBS   = ['sha256: 46f7…', 'anchor 001a', '.ots receipt', 'confirmed'];
+  var blocks = [], links = [];
+  function layout() {
+    blocks = []; links = [];
+    var bw = Math.min(120, (W - 40) / 4 - 26), bh = 52, gap = (W - 20 - 4 * bw) / 3, y = 96;
+    for (var i = 0; i < 4; i++) {
+      var x = 10 + i * (bw + gap);
+      blocks.push({ x: x, y: y, w: bw, h: bh, pulse: 0 });
+      if (i < 3) links.push({ x1: x + bw, x2: x + bw + gap, y: y + bh / 2 });
+    }
+  }
+
+  // drifting background hex glyphs
+  var HEX = '0123456789abcdef', glyphs = [];
+  for (var g = 0; g < 46; g++) glyphs.push({
+    x: Math.random() * 640, y: Math.random() * 200,
+    c: HEX[(Math.random() * 16) | 0] + HEX[(Math.random() * 16) | 0],
+    v: 0.08 + Math.random() * 0.22, a: 0.05 + Math.random() * 0.10
+  });
+
+  // particles travelling link by link
+  var particles = [];
+  function spawn(linkIdx) {
+    var l = links[linkIdx]; if (!l) return;
+    particles.push({ l: linkIdx, t: 0, speed: 0.006 + Math.random() * 0.006,
+      c: HEX[(Math.random() * 16) | 0] + HEX[(Math.random() * 16) | 0] });
+  }
+
+  var acc = 0;
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+
+    // background hex rain
+    ctx.font = '10px ui-monospace, Menlo, Consolas, monospace';
+    for (var i = 0; i < glyphs.length; i++) {
+      var gl = glyphs[i];
+      gl.y -= gl.v; if (gl.y < -10) { gl.y = H + 10; gl.x = Math.random() * W; }
+      ctx.globalAlpha = gl.a; ctx.fillStyle = ink();
+      ctx.fillText(gl.c, gl.x % W, gl.y);
+    }
+    ctx.globalAlpha = 1;
+
+    // links
+    ctx.strokeStyle = faint(); ctx.lineWidth = 1.1;
+    for (var j = 0; j < links.length; j++) {
+      var l2 = links[j];
+      ctx.beginPath(); ctx.moveTo(l2.x1, l2.y); ctx.lineTo(l2.x2 - 6, l2.y); ctx.stroke();
+      // arrowhead
+      ctx.beginPath(); ctx.moveTo(l2.x2 - 6, l2.y - 4); ctx.lineTo(l2.x2, l2.y);
+      ctx.lineTo(l2.x2 - 6, l2.y + 4); ctx.closePath();
+      ctx.fillStyle = faint(); ctx.fill();
+    }
+
+    // blocks
+    for (var b = 0; b < blocks.length; b++) {
+      var bk = blocks[b];
+      if (bk.pulse > 0) bk.pulse *= 0.94;
+      var glow = bk.pulse;
+      ctx.strokeStyle = ink(); ctx.lineWidth = 1.2 + glow * 1.6;
+      ctx.globalAlpha = 0.85 + glow * 0.15;
+      ctx.strokeRect(bk.x, bk.y - bk.h / 2, bk.w, bk.h);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = ink();
+      ctx.font = '11px ui-monospace, Menlo, Consolas, monospace';
+      ctx.fillText(LABELS[b], bk.x + 10, bk.y - 6);
+      ctx.globalAlpha = 0.55;
+      ctx.font = '9px ui-monospace, Menlo, Consolas, monospace';
+      ctx.fillText(SUBS[b], bk.x + 10, bk.y + 12);
+      ctx.globalAlpha = 1;
+      if (glow > 0.02) { // arrival ring
+        ctx.globalAlpha = glow * 0.5; ctx.strokeStyle = ink(); ctx.lineWidth = 1;
+        ctx.strokeRect(bk.x - 4 * (1 - glow), bk.y - bk.h / 2 - 4 * (1 - glow), bk.w + 8 * (1 - glow), bk.h + 8 * (1 - glow));
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    // particles: hex pairs riding the links
+    ctx.font = '9px ui-monospace, Menlo, Consolas, monospace';
+    for (var p = particles.length - 1; p >= 0; p--) {
+      var pt = particles[p], ln = links[pt.l];
+      pt.t += pt.speed;
+      if (pt.t >= 1) { blocks[pt.l + 1].pulse = 1; particles.splice(p, 1); spawn((pt.l + 1) % links.length); continue; }
+      var px = ln.x1 + (ln.x2 - ln.x1) * pt.t;
+      // trail
+      for (var tr = 1; tr <= 3; tr++) {
+        var tt = pt.t - tr * 0.045; if (tt < 0) break;
+        ctx.globalAlpha = 0.35 / tr; ctx.fillStyle = ink();
+        ctx.fillRect(ln.x1 + (ln.x2 - ln.x1) * tt, ln.y - 1, 2, 2);
+      }
+      ctx.globalAlpha = 0.9; ctx.fillStyle = ink();
+      ctx.fillText(pt.c, px - 6, ln.y - 6);
+      ctx.globalAlpha = 1;
+    }
+
+    // steady spawn pressure
+    acc += 1;
+    if (acc % 70 === 0 && particles.length < 6) spawn((Math.random() * links.length) | 0);
+
+    requestAnimationFrame(frame);
+  }
+
+  size();
+  window.addEventListener('resize', size);
+  fallback.style.display = 'none'; // canvas takes over
+  canvas.style.display = 'block';
+  for (var s = 0; s < links.length; s++) spawn(s);
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Settle is operated by one person with AI assistance, as disclosed on the
+    <a href="about.html">About page</a>. Independence and disclosure rules are
+    <a href="governance.html">published and hash-anchored</a>.</p>
+    <p class="mono">settleverify.com · sharma@settleverify.com · security: <a href="https://github.com/TheDocter-dev/settle-hub/blob/main/SECURITY.md">SECURITY.md</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

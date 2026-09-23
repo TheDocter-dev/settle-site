@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledger &amp; how to verify — Settle</title>
+<meta name="description" content="The Settle Ledger is the append-only anchor record. Walk any claim from a SHA-256 row to a Bitcoin block, by hand.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">settle<span>.</span></a>
+    <nav class="site" aria-label="Site">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="assessments.html">assessments</a>
+      <a href="ledger.html" aria-current="page">ledger &amp; verify</a>
+      <a href="governance.html">governance</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <h1>Don't trust this page. Verify the record.</h1>
+    <p class="lede">The <a href="https://github.com/TheDocter-dev/settle-ledger">Settle Ledger</a>
+    is an append-only anchor record. At every publication we commit a manifest of SHA-256 hashes of
+    the artifacts that carry claims — report, evidence manifest, policies, method, code — and we
+    stamp the manifest into the Bitcoin chain with OpenTimestamps. Anything we say can be checked
+    against it in minutes, by hand, without an account and without trusting us.</p>
+
+    <section>
+      <h2>How to verify a claim</h2>
+
+      <ol class="steps">
+        <li>
+          <h3>Get the manifest</h3>
+          <p>Open the current anchor's <code>SHA256SUMS</code> — for the 22 September 2026
+          publication set, that is
+          <a href="https://github.com/TheDocter-dev/settle-ledger/blob/main/anchors/001a/SHA256SUMS">anchors/001a/SHA256SUMS</a>.
+          Each row is one artifact: a hash and a filename.</p>
+        </li>
+        <li>
+          <h3>Fetch the artifact from its public URL</h3>
+          <p>Artifacts live in the <a href="https://github.com/TheDocter-dev/settle-hub">settle-hub</a>
+          repository (reports, policies, code) or the Ledger itself. Use the raw file URL, e.g.:</p>
+          <pre><code>curl -sL https://raw.githubusercontent.com/TheDocter-dev/settle-hub/main/independence-policy.md</code></pre>
+        </li>
+        <li>
+          <h3>Hash it yourself</h3>
+          <pre><code>curl -sL &lt;raw-url&gt; | sha256sum</code></pre>
+          <p>The digest must equal the manifest row, byte-exact. If it differs, what you fetched is
+          not what we anchored — and we want to hear about it (see
+          <a href="contact.html">contact</a>).</p>
+        </li>
+        <li>
+          <h3>Check the anchor commit is signed</h3>
+          <p>Ledger commits are GPG-signed. The signing key fingerprint is published in the
+          <a href="https://github.com/TheDocter-dev/settle-ledger">Ledger README</a>:
+          <span class="hash">3C15 C334 A206 3681 67FB 90C8 5324 071C CD3C 0642</span></p>
+        </li>
+        <li>
+          <h3>Follow the timestamp into Bitcoin</h3>
+          <p>Each anchor ships an OpenTimestamps receipt (<code>SHA256SUMS.ots</code>). Verify it
+          with the open-source <code>ots</code> client:</p>
+          <pre><code>ots verify SHA256SUMS.ots SHA256SUMS</code></pre>
+          <p>A valid receipt proves the manifest existed — with exactly these bytes — no later than
+          the Bitcoin block it names. We cannot backdate, and we cannot quietly edit after the fact:
+          any change breaks the hash row, the signed commit, or the Bitcoin proof.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>What the Ledger is (and is not)</h2>
+      <ul class="plain">
+        <li>It is append-only. Corrections land as new entries that reference what they correct (see anchor 001a correcting 001) — history is never rewritten.</li>
+        <li>It anchors hashes, not trust. The proof says "these exact bytes existed at this time"; reading and judging them is still on you.</li>
+        <li>It is complete for published claims: if a claim of ours isn't anchored, treat it as unanchored and tell us.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Current anchors</h2>
+      <ul class="plain">
+        <li><a href="https://github.com/TheDocter-dev/settle-ledger/tree/main/anchors/001">anchors/001</a> — publication freeze, 19 Sep 2026.</li>
+        <li><a href="https://github.com/TheDocter-dev/settle-ledger/tree/main/anchors/001a">anchors/001a</a> — corrective freeze, 22 Sep 2026 (eleven rows).</li>
+        <li><a href="https://github.com/TheDocter-dev/settle-ledger/blob/main/anchors/002-pre-registration.md">anchors/002-pre-registration</a> — assessment 002 predictions, locked 17 Sep 2026, before any probe.</li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p class="mono">settleverify.com · sharma@settleverify.com · security: <a href="https://github.com/TheDocter-dev/settle-hub/blob/main/SECURITY.md">SECURITY.md</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
