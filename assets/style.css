@@ -1,0 +1,270 @@
+/* Settle — settleverify.com
+   Text-first. No external assets. System font stacks only.
+   Light warm paper, deep-navy ink accent, single vertical hairline guide.
+   One progressive-enhancement script on the home page (canvas hero);
+   the page is complete and readable with JavaScript disabled. */
+
+:root {
+  --c-bg: hsl(40, 9%, 96%);
+  --c-bg-alt: hsl(40, 6%, 91%);
+  --c-text: hsl(0, 0%, 7%);
+  --c-text-alt: hsl(0, 0%, 42%);
+  --c-accent: #082D4F;
+  --c-line: hsl(40, 6%, 85%);
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: hsl(0, 0%, 6%);
+    --c-bg-alt: hsl(0, 0%, 14%);
+    --c-text: hsl(0, 0%, 96%);
+    --c-text-alt: hsl(0, 0%, 62%);
+    --c-accent: #9fc2e8;
+    --c-line: hsl(0, 0%, 20%);
+  }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  font-feature-settings: "onum", "kern", "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The vertical hairline — structural guide down the left edge */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; bottom: 0;
+  left: 2ch;
+  width: 1px;
+  background: var(--c-line);
+  pointer-events: none;
+}
+@media (min-width: 1150px) {
+  body::after { left: calc(50% - 34ch); }
+}
+
+.wrap {
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 0 4ch 0 6ch;
+}
+
+/* ---------- header ---------- */
+header.site {
+  padding: 3.2rem 0 2.4rem;
+  border-bottom: 1px solid var(--c-line);
+}
+header.site .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.wordmark {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+  color: var(--c-text);
+  text-decoration: none;
+}
+.wordmark span { color: var(--c-accent); }
+nav.site {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  display: flex;
+  gap: 1.6ch;
+  flex-wrap: wrap;
+}
+nav.site a {
+  color: var(--c-text-alt);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+nav.site a:hover { color: var(--c-accent); border-bottom-color: var(--c-accent); }
+nav.site a[aria-current="page"] { color: var(--c-accent); border-bottom-color: var(--c-accent); }
+
+/* ---------- main ---------- */
+main { padding: 3.4rem 0 4rem; }
+
+h1 {
+  font-size: 1.9rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 650;
+  max-width: 26ch;
+}
+h1 + .lede { margin-top: 1.1rem; }
+.lede {
+  font-size: 1.06rem;
+  color: var(--c-text-alt);
+  max-width: 56ch;
+}
+
+section { margin-top: 3.6rem; }
+h2 {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: 1.2rem;
+}
+h2::before { content: "§ "; color: var(--c-text-alt); }
+
+p { max-width: 62ch; }
+p + p { margin-top: 0.9rem; }
+
+a { color: var(--c-accent); }
+
+/* ---------- records / lists ---------- */
+.record {
+  border-top: 1px solid var(--c-line);
+  padding: 1.3rem 0;
+}
+.record:last-of-type { border-bottom: 1px solid var(--c-line); }
+.record .meta {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--c-text-alt);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+.record h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.record p { color: var(--c-text); font-size: 0.95rem; }
+
+ul.plain { list-style: none; }
+ul.plain li {
+  padding-left: 2.2ch;
+  position: relative;
+  margin-top: 0.55rem;
+  max-width: 62ch;
+}
+ul.plain li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  color: var(--c-accent);
+  font-family: var(--mono);
+}
+
+/* ---------- code / hashes ---------- */
+code, .hash {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  background: var(--c-bg-alt);
+  padding: 0.1em 0.45em;
+  border-radius: 2px;
+  word-break: break-all;
+}
+pre {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  background: var(--c-bg-alt);
+  border: 1px solid var(--c-line);
+  border-radius: 3px;
+  padding: 1.1rem 1.3rem;
+  overflow-x: auto;
+  margin-top: 1rem;
+  max-width: 68ch;
+}
+pre code { background: none; padding: 0; }
+
+/* ---------- verify steps ---------- */
+ol.steps {
+  list-style: none;
+  counter-reset: step;
+}
+ol.steps li {
+  counter-increment: step;
+  border-top: 1px solid var(--c-line);
+  padding: 1.4rem 0 1.4rem 7ch;
+  position: relative;
+  max-width: 66ch;
+}
+ol.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0; top: 1.45rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--c-accent);
+}
+ol.steps li:last-child { border-bottom: 1px solid var(--c-line); }
+ol.steps h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+ol.steps p { font-size: 0.95rem; color: var(--c-text); }
+
+/* ---------- hash-chain diagram (pure CSS draw) ---------- */
+.chain { margin: 2.6rem 0 0.6rem; max-width: 640px; }
+.chain svg { display: block; width: 100%; height: auto; }
+.chain .link-line {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: draw 0.7s ease-out forwards;
+}
+.chain .blk {
+  opacity: 0;
+  animation: appear 0.4s ease-out forwards;
+}
+.chain .lbl {
+  opacity: 0;
+  animation: appear 0.4s ease-out forwards;
+}
+.chain .d0 { animation-delay: 0.1s; }
+.chain .d1 { animation-delay: 0.7s; }
+.chain .d2 { animation-delay: 1.1s; }
+.chain .d3 { animation-delay: 1.7s; }
+.chain .d4 { animation-delay: 2.1s; }
+.chain .d5 { animation-delay: 2.7s; }
+.chain .d6 { animation-delay: 3.1s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes appear { to { opacity: 1; } }
+.chain-caption {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--c-text-alt);
+  margin-top: 0.8rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chain .link-line, .chain .blk, .chain .lbl { animation: none; opacity: 1; stroke-dashoffset: 0; }
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- footer ---------- */
+footer.site {
+  border-top: 1px solid var(--c-line);
+  padding: 2.2rem 0 3rem;
+  font-size: 0.85rem;
+  color: var(--c-text-alt);
+}
+footer.site p { max-width: 62ch; }
+footer.site .mono { font-family: var(--mono); font-size: 0.75rem; margin-top: 1rem; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 3ch 0 4ch; }
+  h1 { font-size: 1.5rem; }
+  ol.steps li { padding-left: 5.5ch; }
+}
+
+/* ---------- home hero canvas (progressive enhancement) ---------- */
+#heroCanvas { display: none; width: 100%; margin: 2.2rem 0 0; color: var(--c-accent); }
+#chainHero svg { display: block; width: 100%; }
