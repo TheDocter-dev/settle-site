@@ -1,0 +1,77 @@
+name: dormancy-banner
+on:
+  schedule:
+    - cron: '47 6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Newest signed Ledger commit age
+        id: dormancy
+        run: |
+          LAST=$(curl -s https://api.github.com/repos/TheDocter-dev/settle-ledger/commits/main \
+            | python3 -c "import sys,json; print(json.load(sys.stdin)['commit']['committer']['date'])")
+          python3 - "$LAST" << 'PYEOF'
+          import sys, os, datetime
+          last_s = sys.argv[1]
+          last = datetime.datetime.fromisoformat(last_s.replace("Z", "+00:00"))
+          age = (datetime.datetime.now(datetime.timezone.utc) - last).days
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"age_days={age}\nlast_commit={last_s}\n")
+          print(f"ledger age: {age} days (last commit {last_s})")
+          PYEOF
+      - name: Inject dormancy banner if dormant
+        if: fromJSON(steps.dormancy.outputs.age_days) > 30
+        run: |
+          python3 - << 'PYEOF'
+          import glob, datetime
+          age = None
+          for line in open(os.environ["GITHUB_OUTPUT_DORMANCY"] if False else "/dev/null"):
+              pass
+          PYEOF
+          AGE="${{ steps.dormancy.outputs.age_days }}"
+          LAST="${{ steps.dormancy.outputs.last_commit }}"
+          python3 - "$AGE" "$LAST" << 'PYEOF'
+          import sys, glob, html
+          age, last = sys.argv[1], sys.argv[2][:10]
+          banner = (
+            '<div style="background:#8a1f1f;color:#fff;padding:14px 20px;font-family:sans-serif;'
+            'font-size:15px;line-height:1.5;border-bottom:3px solid #5c1414">'
+            '<strong>SETTLE DORMANCY NOTICE.</strong> This record is unmaintained: no signed activity '
+            f'in the <a href="https://github.com/TheDocter-dev/settle-ledger" style="color:#ffd27f">Settle Ledger</a> '
+            f'for {age} days (last signed commit {last}). Anchors and prior findings stand as published; '
+            'nothing newer is verified. This banner is posted automatically by the dormancy-banner mechanism '
+            '(MECHANISMS.md), not by an operator.'
+            '</div>')
+          for f in glob.glob("*.html"):
+              s = open(f).read()
+              if "SETTLE DORMANCY NOTICE" in s:
+                  continue
+              i = s.lower().find("<body")
+              if i == -1:
+                  continue
+              j = s.find(">", i) + 1
+              open(f, "w").write(s[:j] + "\n" + banner + s[j:])
+              print(f"banner injected: {f}")
+          PYEOF
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
