@@ -2,5 +2,5 @@ Contact: mailto:sharma@settleverify.com
 Contact: https://github.com/TheDocter-dev/settle-hub/blob/main/SECURITY.md
 Expires: 2027-09-22T00:00:00.000Z
 Preferred-Languages: en
-Canonical: https://settleverify.com/.well-known/security.txt
+Canonical: https://www.settleverify.com/.well-known/security.txt
 Policy: https://github.com/TheDocter-dev/settle-hub/blob/main/disclosure-policy.md
